@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minecraft Wunschformular</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background: white;
+      margin: 2rem;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    label, legend {
+      display: block;
+      margin-top: 1rem;
+      color: #444;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.75rem 1.5rem;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    fieldset {
+      margin-top: 1.5rem;
+      border: none;
+      padding: 0;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #output {
+      background-color: #e8f5e9;
+      border: 1px solid #c8e6c9;
+      padding: 1rem;
+      border-radius: 4px;
+      white-space: pre-wrap;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 1rem;
+        padding: 1rem;
+      }
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="headline">Willkommen!</h1>
+
+    <!-- Name abfragen -->
+    <div id="askName">
+      <label for="nameInput">Wie heißt du?</label>
+      <input type="text" id="nameInput" placeholder="Dein Name" />
+      <button id="btnName">Los geht’s</button>
+    </div>
+
+    <!-- Formular -->
+    <form id="wunschForm" class="hidden">
+      <fieldset>
+        <legend>Was möchtest du in Minecraft gebaut haben?</legend>
+        <label><input type="checkbox" name="wunsch" value="Haus" /> Haus</label>
+        <label><input type="checkbox" name="wunsch" value="Burg" /> Burg</label>
+        <label><input type="checkbox" name="wunsch" value="Farm" /> Farm</label>
+        <label><input type="checkbox" name="wunsch" value="Garten" /> Garten</label>
+        <label><input type="checkbox" name="wunsch" value="Redstone-Mechanik" /> Redstone-Mechanik</label>
+        <label>
+          <input type="checkbox" name="wunsch" value="Sonstiges" /> Sonstiges:
+        </label>
+        <input type="text" name="other" placeholder="Was genau?" />
+      </fieldset>
+      <button type="submit">Absenden</button>
+    </form>
+
+    <!-- Ausgabe -->
+    <div id="output" class="hidden"></div>
+  </div>
+
+  <script>
+    const askNameDiv = document.getElementById('askName');
+    const nameInput = document.getElementById('nameInput');
+    const btnName = document.getElementById('btnName');
+    const headline = document.getElementById('headline');
+    const form = document.getElementById('wunschForm');
+    const outputDiv = document.getElementById('output');
+
+    btnName.addEventListener('click', () => {
+      const name = nameInput.value.trim();
+      if (!name) {
+        alert('Bitte gib deinen Namen ein!');
+        return;
+      }
+      headline.textContent = `Hallo, ${name}! Was möchtest du bauen lassen?`;
+      askNameDiv.classList.add('hidden');
+      form.classList.remove('hidden');
+    });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const data = { name: nameInput.value.trim(), wunsch: [] };
+
+      const checks = form.querySelectorAll('input[name="wunsch"]:checked');
+      checks.forEach(chk => data.wunsch.push(chk.value));
+
+      const other = form.querySelector('input[name="other"]').value.trim();
+      if (other) data.wunsch.push(`Sonstiges: ${other}`);
+
+      outputDiv.textContent = JSON.stringify(data, null, 2);
+      outputDiv.classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
