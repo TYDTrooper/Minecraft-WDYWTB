@@ -3,156 +3,137 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Minecraft Wunschformular</title>
+  <title>Minecraft Bauwünsche</title>
   <style>
     body {
-      font-family: "Segoe UI", sans-serif;
-      background: #f0f4f8;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-    }
-
-    .container {
-      max-width: 600px;
-      width: 100%;
-      background: white;
+      font-family: sans-serif;
       margin: 2rem;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      background-color: #f0f0f0;
     }
-
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-
-    label, legend {
-      display: block;
-      margin-top: 1rem;
-      color: #444;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 0.5rem;
-      margin-top: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    button {
-      display: inline-block;
-      margin-top: 1.5rem;
-      padding: 0.75rem 1.5rem;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    fieldset {
-      margin-top: 1.5rem;
-      border: none;
-      padding: 0;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    #output {
-      background-color: #e8f5e9;
-      border: 1px solid #c8e6c9;
+    .section {
+      margin-bottom: 2rem;
+      background: white;
       padding: 1rem;
-      border-radius: 4px;
-      white-space: pre-wrap;
-      margin-top: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-
-    @media (max-width: 600px) {
-      .container {
-        margin: 1rem;
-        padding: 1rem;
-      }
-      button {
-        width: 100%;
-      }
+    label {
+      display: block;
+      margin: 0.5rem 0;
+    }
+    input[type="number"] {
+      width: 60px;
+      margin-left: 1rem;
+    }
+    #total {
+      font-weight: bold;
+      font-size: 1.2em;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1 id="headline">Willkommen!</h1>
 
-    <!-- Name abfragen -->
-    <div id="askName">
-      <label for="nameInput">Wie heißt du?</label>
-      <input type="text" id="nameInput" placeholder="Dein Name" />
-      <button id="btnName">Los geht’s</button>
-    </div>
+  <h1>Minecraft Wunschformular</h1>
 
-    <!-- Formular -->
-    <form id="wunschForm" class="hidden">
-      <fieldset>
-        <legend>Was möchtest du in Minecraft gebaut haben?</legend>
-        <label><input type="checkbox" name="wunsch" value="Haus" /> Haus</label>
-        <label><input type="checkbox" name="wunsch" value="Burg" /> Burg</label>
-        <label><input type="checkbox" name="wunsch" value="Farm" /> Farm</label>
-        <label><input type="checkbox" name="wunsch" value="Garten" /> Garten</label>
-        <label><input type="checkbox" name="wunsch" value="Redstone-Mechanik" /> Redstone-Mechanik</label>
-        <label>
-          <input type="checkbox" name="wunsch" value="Sonstiges" /> Sonstiges:
-        </label>
-        <input type="text" name="other" placeholder="Was genau?" />
-      </fieldset>
-      <button type="submit">Absenden</button>
-    </form>
+  <!-- Häuser -->
+  <div class="section">
+    <h2>🏠 Häuser</h2>
+    <label><input type="checkbox" class="haus" data-preis="27"> Start (27 Dias / 3 Blöcke) <input type="number" min="1" value="1" class="menge hidden" /></label>
+    <label><input type="checkbox" class="haus" data-preis="54"> Living (54 Dias / 6 Blöcke) <input type="number" min="1" value="1" class="menge hidden" /></label>
+    <label><input type="checkbox" class="haus" data-preis="90"> Main (90 Dias / 10 Blöcke) <input type="number" min="1" value="1" class="menge hidden" /></label>
+    <label><input type="checkbox" class="haus" data-preis="180"> Big (180 Dias / 20 Blöcke) <input type="number" min="1" value="1" class="menge hidden" /></label>
+  </div>
 
-    <!-- Ausgabe -->
-    <div id="output" class="hidden"></div>
+  <!-- Extras -->
+  <div class="section">
+    <h2>✨ Extras</h2>
+    <label><input type="checkbox" class="extra" data-preis="9"> Tiere (9 Dias / 1 Block) <input type="number" min="1" value="1" class="menge hidden" /></label>
+    <label><input type="checkbox" class="extra" data-preis="9"> Farm (9 Dias / 1 Block) <input type="number" min="1" value="1" class="menge hidden" /></label>
+    <label><input type="checkbox" class="extra" data-preis="18"> Detail (18 Dias / 2 Blöcke) <input type="number" min="1" value="1" class="menge hidden" /></label>
+  </div>
+
+  <!-- Tutorial -->
+  <div class="section">
+    <h2>📘 Tutorial</h2>
+    <label><input type="radio" name="tutorial" value="with"> Mit (-15%)</label>
+    <label><input type="radio" name="tutorial" value="without" checked> Ohne</label>
+  </div>
+
+  <!-- Redstone -->
+  <div class="section">
+    <h2>⚙️ Redstone / Farmen</h2>
+    <label><input type="checkbox" class="redstone" data-preis="18"> Simple (18 Dias / 2 Blöcke)</label>
+    <label><input type="checkbox" class="redstone" data-preis="45"> Big (45 Dias / 5 Blöcke)</label>
+    <label><input type="checkbox" class="redstone" data-preis="72"> Schwer (72 Dias / 8 Blöcke)</label>
+  </div>
+
+  <!-- Materialien -->
+  <div class="section">
+    <h2>🪵 Materialien</h2>
+    <label><input type="radio" name="material" value="selbst" checked> Selbst mitbringen (/)</label>
+    <label><input type="radio" name="material" value="ich"> Ich kümmere mich (+50%)</label>
+  </div>
+
+  <!-- Terraforming -->
+  <div class="section">
+    <h2>🌄 Terraforming</h2>
+    <label><input type="checkbox" class="terra" data-multi="1.5"> Berg (+50%)</label>
+    <label><input type="checkbox" class="terra" data-multi="1.1"> Flach (+10%)</label>
+    <label><input type="checkbox" class="terra" data-multi="1.25"> Wasser (+25%)</label>
+  </div>
+
+  <!-- Ergebnis -->
+  <div class="section">
+    <button onclick="berechne()">Preis berechnen</button>
+    <p id="total">Gesamt: 0 Dias</p>
   </div>
 
   <script>
-    const askNameDiv = document.getElementById('askName');
-    const nameInput = document.getElementById('nameInput');
-    const btnName = document.getElementById('btnName');
-    const headline = document.getElementById('headline');
-    const form = document.getElementById('wunschForm');
-    const outputDiv = document.getElementById('output');
+    const alleCheckboxenMitMenge = document.querySelectorAll('.haus, .extra');
 
-    btnName.addEventListener('click', () => {
-      const name = nameInput.value.trim();
-      if (!name) {
-        alert('Bitte gib deinen Namen ein!');
-        return;
-      }
-      headline.textContent = `Hallo, ${name}! Was möchtest du bauen lassen?`;
-      askNameDiv.classList.add('hidden');
-      form.classList.remove('hidden');
+    // Checkbox-Logik: Eingabefeld zeigen
+    alleCheckboxenMitMenge.forEach(cb => {
+      cb.addEventListener('change', () => {
+        const eingabe = cb.parentElement.querySelector('.menge');
+        if (cb.checked) {
+          eingabe.classList.remove('hidden');
+        } else {
+          eingabe.classList.add('hidden');
+        }
+      });
     });
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const data = { name: nameInput.value.trim(), wunsch: [] };
+    function berechne() {
+      let summe = 0;
 
-      const checks = form.querySelectorAll('input[name="wunsch"]:checked');
-      checks.forEach(chk => data.wunsch.push(chk.value));
+      // Häuser + Extras mit Menge
+      document.querySelectorAll('.haus:checked, .extra:checked').forEach(el => {
+        const menge = Number(el.parentElement.querySelector('.menge').value || 1);
+        summe += Number(el.dataset.preis) * menge;
+      });
 
-      const other = form.querySelector('input[name="other"]').value.trim();
-      if (other) data.wunsch.push(`Sonstiges: ${other}`);
+      // Redstone / Farmen
+      document.querySelectorAll('.redstone:checked').forEach(el => {
+        summe += Number(el.dataset.preis);
+      });
 
-      outputDiv.textContent = JSON.stringify(data, null, 2);
-      outputDiv.classList.remove('hidden');
-    });
+      // Materialkosten
+      const material = document.querySelector('input[name="material"]:checked').value;
+      if (material === "ich") summe *= 1.5;
+
+      // Terraforming
+      document.querySelectorAll('.terra:checked').forEach(el => {
+        summe *= Number(el.dataset.multi);
+      });
+
+      // Tutorial Rabatt
+      const tutorial = document.querySelector('input[name="tutorial"]:checked').value;
+      if (tutorial === "with") summe *= 0.85;
+
+      // Ausgabe
+      document.getElementById('total').textContent = `Gesamt: ${Math.round(summe)} Dias`;
+    }
   </script>
+
 </body>
 </html>
