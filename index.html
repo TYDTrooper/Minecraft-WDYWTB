@@ -1,36 +1,42 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Minecraft Bauwunsch</title>
   <style>
-    body {
-      font-family: sans-serif;
-      background: #f2f2f2;
-      margin: 2rem;
-    }
-    .section {
-      background: white;
-      padding: 1rem;
-      margin-bottom: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
+    body { font-family: sans-serif; background: #f2f2f2; margin: 2rem; }
+    .section { background: white; padding: 1rem; margin-bottom: 2rem; border-radius: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
     label { display: block; margin: 0.5rem 0; }
-    input[type="number"], input[type="text"], select, textarea {
-      margin-left: 1rem;
-    }
+    input[type="number"], input[type="text"], textarea, select { margin-left: 1rem; }
     input[type="number"] { width: 60px; }
     textarea { width: 100%; height: 80px; }
     #total { font-weight: bold; font-size: 1.2em; }
     .hidden { display: none; }
     .hint { font-size: 0.9em; color: #555; margin-top: 0.25rem; }
+    button { padding: 0.5rem 1rem; cursor: pointer; }
   </style>
 </head>
 <body>
 
   <h1>Minecraft Wunschformular</h1>
+
+  <!-- Kontaktdaten -->
+  <div class="section">
+    <h2>🙋 Deine Kontaktdaten</h2>
+    <label>
+      Name:<br>
+      <input type="text" id="userName" placeholder="Dein Name">
+    </label>
+    <label>
+      Telefonnummer:<br>
+      <input type="text" id="userPhone" placeholder="+49...">
+    </label>
+    <label>
+      Discord-Name:<br>
+      <input type="text" id="userDiscord" placeholder="Name#1234">
+    </label>
+  </div>
 
   <!-- Häuser -->
   <div class="section">
@@ -134,8 +140,8 @@
   <!-- Stil -->
   <div class="section">
     <h2>🎨 Stil-Wunsch</h2>
-    <textarea id="stil" placeholder="z. B. Steampunk, modern, Mittelalter oder auch position von Mauern oder Layout wie 5*10 oder 4*12 etc"></textarea>
-    <p class="hint">Standard: Holz und Stein (ansonsten kann es optische mängel abweichen,kann aber nach indv verhandeltem Aufpreis zusammen beglichen werden)</p>
+    <textarea id="stil" placeholder="z. B. Steampunk, modern, Mittelalter oder Layout wie 5×10"></textarea>
+    <p class="hint">Standard: Holz und Stein (ansonsten optische Mängel möglich, Aufpreis vor Ort verhandelbar)</p>
   </div>
 
   <!-- Extrawünsche -->
@@ -151,7 +157,7 @@
   </div>
 
   <script>
-    // Zeige Mengen-Felder und Einrichtungsauswahl nur bei gewählten Items
+    // Zeige Mengen- und Einrichtungselemente nur wenn ausgewählt
     document.querySelectorAll('.haus, .extra').forEach(cb => {
       cb.addEventListener('change', () => {
         const parent = cb.parentElement;
@@ -194,20 +200,40 @@
     }
 
     function absenden() {
+      const name    = document.getElementById('userName').value.trim();
+      const phone   = document.getElementById('userPhone').value.trim();
+      const discord = document.getElementById('userDiscord').value.trim();
+      // Pflichtfelder prüfen
+      if (!name || !phone || !discord) {
+        alert("Bitte fülle Name, Telefonnummer und Discord-Name aus.");
+        return;
+      }
+
       const preis = berechnePreis();
       document.getElementById('total').textContent = `Gesamt: ${preis} Dias`;
 
-      // Sammle alle Infos
-      const x = document.getElementById('xCoord').value;
-      const z = document.getElementById('zCoord').value;
-      const stil = document.getElementById('stil').value.trim();
-      const extraTxt = document.getElementById('extrawunsch').value.trim();
+      if (!confirm("Möchtest du die Anfrage wirklich absenden?")) return;
 
-      let msg = `📋 Deine Auswahl:\n- Preis: ${preis} Dias\n- Koordinaten: X=${x}, Z=${z}\n`;
-      if (stil)   msg += `- Stil: ${stil}\n`;
-      if (extraTxt) msg += `- Extrawunsch: ${extraTxt}\n`;
+      // Weitere Felder sammeln
+      const x      = document.getElementById('xCoord').value || '–';
+      const z      = document.getElementById('zCoord').value || '–';
+      const stil   = document.getElementById('stil').value.trim() || '–';
+      const extra  = document.getElementById('extrawunsch').value.trim() || '–';
 
-      alert(msg);
+      // SMS-Text bauen
+      const msg =
+        `Minecraft-Anfrage\n` +
+        `Name: ${name}\n` +
+        `Tel: ${phone}\n` +
+        `Discord: ${discord}\n` +
+        `Preis: ${preis} Dias\n` +
+        `Koordinaten: X=${x}, Z=${z}\n` +
+        `Stil: ${stil}\n` +
+        `Extrawünsche: ${extra}`;
+
+      // Deine Nummer hier eintragen
+      const myNumber = '+4915111655690';
+      window.location.href = `sms:${myNumber}?body=${encodeURIComponent(msg)}`;
     }
   </script>
 
