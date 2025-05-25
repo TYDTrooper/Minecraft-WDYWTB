@@ -1,33 +1,40 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Minecraft Bauwünsche</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minecraft Bauwunsch</title>
   <style>
     body {
       font-family: sans-serif;
+      background: #f2f2f2;
       margin: 2rem;
-      background-color: #f0f0f0;
     }
     .section {
-      margin-bottom: 2rem;
       background: white;
       padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
     label {
       display: block;
       margin: 0.5rem 0;
     }
-    input[type="number"] {
-      width: 60px;
+    input[type="number"], input[type="text"] {
       margin-left: 1rem;
+      width: 60px;
+    }
+    textarea {
+      width: 100%;
+      height: 80px;
     }
     #total {
       font-weight: bold;
       font-size: 1.2em;
+    }
+    .hidden {
+      display: none;
     }
   </style>
 </head>
@@ -37,41 +44,61 @@
 
   <!-- Häuser -->
   <div class="section">
-    <h2>🏠 Häuser</h2>
-    <label><input type="checkbox" class="haus" data-preis="27"> Start (27 Dias / 3 Blöcke) <input type="number" min="1" value="1" class="menge hidden" /></label>
-    <label><input type="checkbox" class="haus" data-preis="54"> Living (54 Dias / 6 Blöcke) <input type="number" min="1" value="1" class="menge hidden" /></label>
-    <label><input type="checkbox" class="haus" data-preis="90"> Main (90 Dias / 10 Blöcke) <input type="number" min="1" value="1" class="menge hidden" /></label>
-    <label><input type="checkbox" class="haus" data-preis="180"> Big (180 Dias / 20 Blöcke) <input type="number" min="1" value="1" class="menge hidden" /></label>
+    <h2>🏠 Häuser (Etagenweise)</h2>
+    <label><input type="checkbox" class="haus" data-preis="27" data-einrichtung="0.15"> Start – 25 qm <input type="number" min="1" value="1" class="menge hidden"> Etagen 
+      <select class="einrichtung hidden">
+        <option value="0">Ohne Einrichtung</option>
+        <option value="1">Mit Einrichtung (+15%)</option>
+      </select>
+    </label>
+    <label><input type="checkbox" class="haus" data-preis="54" data-einrichtung="0.20"> Living – 50 qm <input type="number" min="1" value="1" class="menge hidden"> 
+      <select class="einrichtung hidden">
+        <option value="0">Ohne Einrichtung</option>
+        <option value="1">Mit Einrichtung (+20%)</option>
+      </select>
+    </label>
+    <label><input type="checkbox" class="haus" data-preis="90" data-einrichtung="0.30"> Main – 100 qm <input type="number" min="1" value="1" class="menge hidden"> 
+      <select class="einrichtung hidden">
+        <option value="0">Ohne Einrichtung</option>
+        <option value="1">Mit Einrichtung (+30%)</option>
+      </select>
+    </label>
+    <label><input type="checkbox" class="haus" data-preis="180" data-einrichtung="0.45"> Big – >100 qm <input type="number" min="1" value="1" class="menge hidden"> 
+      <select class="einrichtung hidden">
+        <option value="0">Ohne Einrichtung</option>
+        <option value="1">Mit Einrichtung (+45%)</option>
+      </select>
+    </label>
   </div>
 
   <!-- Extras -->
   <div class="section">
     <h2>✨ Extras</h2>
-    <label><input type="checkbox" class="extra" data-preis="9"> Tiere (9 Dias / 1 Block) <input type="number" min="1" value="1" class="menge hidden" /></label>
-    <label><input type="checkbox" class="extra" data-preis="9"> Farm (9 Dias / 1 Block) <input type="number" min="1" value="1" class="menge hidden" /></label>
-    <label><input type="checkbox" class="extra" data-preis="18"> Detail (18 Dias / 2 Blöcke) <input type="number" min="1" value="1" class="menge hidden" /></label>
+    <label><input type="checkbox" class="extra" data-preis="9"> Tiere <input type="number" min="1" value="1" class="menge hidden"></label>
+    <label><input type="checkbox" class="extra" data-preis="9"> Farm <input type="number" min="1" value="1" class="menge hidden"></label>
+    <label><input type="checkbox" class="extra" data-preis="18"> Detail <input type="number" min="1" value="1" class="menge hidden"></label>
   </div>
 
   <!-- Tutorial -->
   <div class="section">
     <h2>📘 Tutorial</h2>
-    <label><input type="radio" name="tutorial" value="with"> Mit (-15%)</label>
-    <label><input type="radio" name="tutorial" value="without" checked> Ohne</label>
+    <label><input type="radio" name="tutorial" value="mit"> Mit Anleitung (-15%)</label>
+    <label><input type="radio" name="tutorial" value="ohne" checked> Ohne</label>
   </div>
 
   <!-- Redstone -->
   <div class="section">
     <h2>⚙️ Redstone / Farmen</h2>
-    <label><input type="checkbox" class="redstone" data-preis="18"> Simple (18 Dias / 2 Blöcke)</label>
-    <label><input type="checkbox" class="redstone" data-preis="45"> Big (45 Dias / 5 Blöcke)</label>
-    <label><input type="checkbox" class="redstone" data-preis="72"> Schwer (72 Dias / 8 Blöcke)</label>
+    <label><input type="checkbox" class="redstone" data-preis="18"> Simple</label>
+    <label><input type="checkbox" class="redstone" data-preis="45"> Big</label>
+    <label><input type="checkbox" class="redstone" data-preis="72"> Schwer</label>
   </div>
 
   <!-- Materialien -->
   <div class="section">
     <h2>🪵 Materialien</h2>
-    <label><input type="radio" name="material" value="selbst" checked> Selbst mitbringen (/)</label>
-    <label><input type="radio" name="material" value="ich"> Ich kümmere mich (+50%)</label>
+    <label><input type="radio" name="material" value="selber" checked> Stelle ich selbst</label>
+    <label><input type="radio" name="material" value="ich"> Du besorgst sie (+50%)</label>
   </div>
 
   <!-- Terraforming -->
@@ -82,56 +109,100 @@
     <label><input type="checkbox" class="terra" data-multi="1.25"> Wasser (+25%)</label>
   </div>
 
-  <!-- Ergebnis -->
+  <!-- Wunschort -->
   <div class="section">
-    <button onclick="berechne()">Preis berechnen</button>
+    <h2>📍 Wunschkoordinaten</h2>
+    <label>X-Koordinate: <input type="text" id="xCoord"></label>
+    <label>Z-Koordinate: <input type="text" id="zCoord"></label>
+    <p>Hinweis: Hier wird dein Bett stehen!</p>
+  </div>
+
+  <!-- Extrawünsche -->
+  <div class="section">
+    <h2>💬 Extrawünsche</h2>
+    <textarea id="extrawunsch" placeholder="Hier kannst du z.B. Villager, Speichersystem, Dorf etc. eintragen. Preis wird vor Ort verhandelt."></textarea>
+  </div>
+
+  <!-- Preis & Absenden -->
+  <div class="section">
+    <button onclick="absenden()">Absenden</button>
     <p id="total">Gesamt: 0 Dias</p>
   </div>
 
   <script>
-    const alleCheckboxenMitMenge = document.querySelectorAll('.haus, .extra');
+    const checkboxMitMenge = document.querySelectorAll('.haus, .extra');
 
-    // Checkbox-Logik: Eingabefeld zeigen
-    alleCheckboxenMitMenge.forEach(cb => {
+    checkboxMitMenge.forEach(cb => {
       cb.addEventListener('change', () => {
-        const eingabe = cb.parentElement.querySelector('.menge');
+        const parent = cb.parentElement;
+        const menge = parent.querySelector('.menge');
+        const auswahl = parent.querySelector('.einrichtung');
         if (cb.checked) {
-          eingabe.classList.remove('hidden');
+          menge?.classList.remove('hidden');
+          auswahl?.classList.remove('hidden');
         } else {
-          eingabe.classList.add('hidden');
+          menge?.classList.add('hidden');
+          auswahl?.classList.add('hidden');
         }
       });
     });
 
-    function berechne() {
+    function berechnePreis() {
       let summe = 0;
 
-      // Häuser + Extras mit Menge
-      document.querySelectorAll('.haus:checked, .extra:checked').forEach(el => {
+      // Häuser + Einrichtung
+      document.querySelectorAll('.haus:checked').forEach(el => {
+        const menge = Number(el.parentElement.querySelector('.menge').value || 1);
+        const einrichtungsWahl = el.parentElement.querySelector('.einrichtung').value;
+        const einrichtungsProzent = parseFloat(el.dataset.einrichtung);
+        let basis = Number(el.dataset.preis) * menge;
+        if (einrichtungsWahl === "1") basis *= (1 + einrichtungsProzent);
+        summe += basis;
+      });
+
+      // Extras
+      document.querySelectorAll('.extra:checked').forEach(el => {
         const menge = Number(el.parentElement.querySelector('.menge').value || 1);
         summe += Number(el.dataset.preis) * menge;
       });
 
-      // Redstone / Farmen
+      // Redstone
       document.querySelectorAll('.redstone:checked').forEach(el => {
         summe += Number(el.dataset.preis);
       });
 
-      // Materialkosten
-      const material = document.querySelector('input[name="material"]:checked').value;
-      if (material === "ich") summe *= 1.5;
+      // Material
+      if (document.querySelector('input[name="material"]:checked').value === "ich") {
+        summe *= 1.5;
+      }
 
       // Terraforming
       document.querySelectorAll('.terra:checked').forEach(el => {
         summe *= Number(el.dataset.multi);
       });
 
-      // Tutorial Rabatt
-      const tutorial = document.querySelector('input[name="tutorial"]:checked').value;
-      if (tutorial === "with") summe *= 0.85;
+      // Tutorial
+      if (document.querySelector('input[name="tutorial"]:checked').value === "mit") {
+        summe *= 0.85;
+      }
 
-      // Ausgabe
-      document.getElementById('total').textContent = `Gesamt: ${Math.round(summe)} Dias`;
+      return Math.round(summe);
+    }
+
+    function absenden() {
+      const preis = berechnePreis();
+      document.getElementById('total').textContent = `Gesamt: ${preis} Dias`;
+
+      const x = document.getElementById('xCoord').value;
+      const z = document.getElementById('zCoord').value;
+      const extra = document.getElementById('extrawunsch').value;
+
+      let nachricht = `📋 Deine Auswahl:\n- Preis: ${preis} Dias\n- Koordinaten: X=${x}, Z=${z}\n`;
+      if (extra.trim()) {
+        nachricht += `- Extrawunsch: ${extra}`;
+      }
+
+      alert(nachricht);
     }
   </script>
 
